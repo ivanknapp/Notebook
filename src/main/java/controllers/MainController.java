@@ -139,6 +139,7 @@ public class MainController implements Initializable {
 
         switch (clickedButton.getId()) {
             case "addButton":
+                editController.setSqlCommand(Main.INSERT_INTO);
                 editController.setNote(new Note());
                 showEditWindow();
                 if (!editController.getNote().getText().isEmpty())
@@ -147,10 +148,22 @@ public class MainController implements Initializable {
 
             case "editButton":
                 //заглушка для изменения записей
+                editController.setSqlCommand(Main.UPDATE);
+                Note noteEdit = tableNotes.getSelectionModel().getSelectedItem();
+                editController.setNote(noteEdit);
+                showEditWindow();
+                data.add(editController.getNote());
+                data.delete(noteEdit);
                 break;
 
             case "deleteButton":
                 //заглушка для удаления записей
+                editController.setSqlCommand(Main.DELETE);
+                Note noteDelete = tableNotes.getSelectionModel().getSelectedItem();
+                editController.setNote(noteDelete);
+                editController.actionSave(event);
+                data.delete(noteDelete);
+                break;
 
         }
     }

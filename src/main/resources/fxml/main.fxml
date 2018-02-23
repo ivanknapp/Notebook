@@ -25,8 +25,8 @@
    <top>
       <AnchorPane prefHeight="73.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="deleteButton" layoutX="403.0" layoutY="25.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="80.0" text="Delete" visible="false" />
-            <Button fx:id="editButton" layoutX="254.0" layoutY="25.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="80.0" text="Edit" visible="false" />
+            <Button fx:id="deleteButton" layoutX="403.0" layoutY="25.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="80.0" text="Delete" visible="true" />
+            <Button fx:id="editButton" layoutX="254.0" layoutY="25.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="80.0" text="Edit" visible="true" />
             <Button fx:id="addButton" layoutX="92.0" layoutY="25.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="80.0" text="Add" />
          </children>
       </AnchorPane>
@@ -34,7 +34,7 @@
    <bottom>
       <AnchorPane prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="countNotesLabel" layoutX="52.0" layoutY="6.0" prefHeight="17.0" prefWidth="152.0" text="Label" />
+            <Label fx:id="countNotesLabel" layoutX="52.0" layoutY="6.0" prefHeight="17.0" prefWidth="152.0" text="Total notes: " />
          </children>
       </AnchorPane>
    </bottom>

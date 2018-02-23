@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    public static final String INSERT_INTO ="INSERT INTO notes (date,text)VALUES(?,?)";
+    public static final String UPDATE ="UPDATE notes SET text=? WHERE text=?";
+    public static final String DELETE ="DELETE FROM notes WHERE text=?";
     public static final String GET_ALL = "SELECT * FROM notes";
     public static final String FXML_EDIT = "/fxml/note.fxml";
     public static final String FXML_MAIN = "/fxml/main.fxml";

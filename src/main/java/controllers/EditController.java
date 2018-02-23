@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import objects.Note;
 import connection.ConnectionDb;
+import start.Main;
 
 
 import java.net.URL;
@@ -21,14 +22,17 @@ import java.util.ResourceBundle;
 
 public class EditController implements Initializable {
 
-    private static final String INSERT_INTO ="INSERT INTO notes (date,text)VALUES(?,?)";
+    private String sqlCommand;
+
     private ConnectionDb connection = ConnectionDb.getInstance();
+
     private Note note;
 
     @FXML
     private Label dateLabel;
     @FXML
     private TextArea textArea;
+
     @FXML
     private Button button;
 
@@ -39,7 +43,6 @@ public class EditController implements Initializable {
         //текущее время в отдельной нити
         initTimeLabel();
     }
-
     private void initTextArea() {
         //ограничение на ввод символов ( до 100 символов )
         TextFormatter<String> textFormatter = new TextFormatter<>(c -> c
@@ -76,8 +79,23 @@ public class EditController implements Initializable {
     }
 
     public void actionSave(ActionEvent event) {
+        String type = sqlCommand.split(" ")[0];
+        switch (type){
+            case "INSERT" : insert(event); break;
+            case "UPDATE" : update(event); break;
+            case "DELETE" : delete(event); break;
+        }
+    }
+
+    public void actionClose(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.hide();
+    }
+
+    private void insert(ActionEvent event){
         try (
-            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(INSERT_INTO)
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(Main.INSERT_INTO)
         ){
             java.util.Date date = new java.util.Date();
             java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
@@ -102,10 +120,21 @@ public class EditController implements Initializable {
         }
     }
 
-    public void actionClose(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
+    private void update(ActionEvent event){
+        delete(event);
+        insert(event);
+    }
+
+    private void delete(ActionEvent event){
+        try (
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(Main.DELETE)
+        ) {
+            preparedStatement.setString(1, note.getText());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setNote(Note note) {
@@ -118,5 +147,13 @@ public class EditController implements Initializable {
 
     public Note getNote() {
         return note;
+    }
+
+    public void setSqlCommand(String sqlCommand) {
+        this.sqlCommand = sqlCommand;
+    }
+
+    public String getSqlCommand() {
+        return sqlCommand;
     }
 }
